@@ -404,7 +404,7 @@ codeunit 60002 "EBT Plutus EDC Integration"
         ResponseLog."Response Log".CreateOutStream(OutStream, TEXTENCODING::UTF8);
         OutStream.WriteText(ResponseTxt);
         ResponseLog.Insert(true);
-        // Commit();
+        Commit();
     end;
 
     internal procedure RefundEDCTransaction(var POSTransaction: Record "LSC POS Transaction"; EDCResponseLog: Record "EBT Pinelab EDC Response Log"; TenderAmountText: Text): Boolean
@@ -433,45 +433,19 @@ codeunit 60002 "EBT Plutus EDC Integration"
             ProgressTxt := StrSubstNo(ProgressLbl, TenderAmountText)
         else
             ProgressTxt := StrSubstNo(TenderType."EBT PinelabWaiting Message", TenderAmountText);
-
         ProgressWindow.Open(ProgressTxt);
-
         GetSetup();
         POSTerminal.Get(POSTransaction."POS Terminal No.");
         POSTerminal.TestField("EBT Pinelab EDC Device IP");
         POSTerminal.TestField("EBT Pinelab EDC Device Port");
-
         BaseUrl := StrSubstNo(EDCSetup."Base URL", POSTerminal."EBT Pinelab EDC Device IP", POSTerminal."EBT Pinelab EDC Device Port");
         ValueTxt := PrepareValue(POSTransaction, TenderAmountText, TenderType);
         BodyObject.Add('request_csv', ValueTxt);
         BodyObject.WriteTo(bodyText);
-        //SKUItemDetailsTxt := PrepareSKUItemDetails(POSTransaction, TenderAmountText);
-        //BaseUrl += '?' + ValueTxt;
         ResponseTxt := ExecuteWebRequest(BaseUrl, 'POST', bodyText, HeaderValues);
         PayLoadObject.ReadFrom(ResponseTxt);
-        // payloadToken := GetJsonToken(PayLoadObject, 'response_csv');
-        // PayLoadObject := payloadToken.AsObject();
-        // payloadToken := GetJsonToken(PayLoadObject, 'response_csv');
-
         ResponseTxtFormatted := GetJsonToken(PayLoadObject, 'response_csv').AsValue().AsText();
-
-        // JToken := Get(BaseUrl);
         FillResponseLog(POSTransaction, EDCResponseLog, TenderAmountText, ResponseTxtFormatted);
-        // if EDCResponseLog."Response Code" <> '00' then
-        //     Error('%1', EDCResponseLog."Response Message");
-
-        // BaseUrl := StrSubstNo(EDCSetup."Base URL", POSTerminal."EBT Pinelab EDC Device IP", POSTerminal."EBT Pinelab EDC Device Port");
-        // BaseUrl += '?primeID=' + EDCResponseLog.PrimeID;
-        // ResponseTxt := ExecuteWebRequest(BaseUrl, 'GET', bodyText, HeaderValues);
-
-        if GetLastResultStatusCode() <> 200 then
-            Error('%1', ResponseTxt);
-
-        // EDCResponseLog."Tender Type" := TenderType.Code;
-        // EDCResponseLog.Modify();
-        // EDCResponseLog."Tender Type" := TenderType.Code;
-        // EDCResponseLog.Modify();
-        Commit();
         ProgressWindow.Close();
         exit(true)
     end;
