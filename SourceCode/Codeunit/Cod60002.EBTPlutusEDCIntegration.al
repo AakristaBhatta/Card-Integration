@@ -329,11 +329,7 @@ codeunit 60002 "EBT Plutus EDC Integration"
     begin
         Clear(ResponseLog);
         Separator := ',';
-
-        // Split the response string by lines (in this case, it's just one line)
         CsvLine := ResponseTxt;
-        // Message(response);
-        // Use the Text.Split function to split the CSV line into fields
         CsvFields := CsvLine.Split(Separator);
         ResponseLog.Init();
         foreach field in csvFields do begin
@@ -342,64 +338,64 @@ codeunit 60002 "EBT Plutus EDC Integration"
             Field := DelChr(Field, '=', '\');
             Field := DelChr(Field, '=', '"');
             case i of
-                2:
+                1:
                     ResponseLog."Billing Reference No." := Field;
-                3:
+                2:
                     Evaluate(ResponseLog."Approval Code", Field);
-                4:
+                3:
                     Evaluate(ResponseLog."Host Response", Field);
 
-                5:
+                4:
                     Evaluate(ResponseLog."Card Number", Field);
-                6:
+                5:
                     if field <> 'XXXX' then
                         Evaluate(ResponseLog."Expiration Date", Field);
-                7:
+                6:
                     Evaluate(ResponseLog."CardHolder's Name", Field);
 
-                8:
+                7:
                     Evaluate(ResponseLog."Card Type", Field);
 
-                9:
+                8:
                     Evaluate(ResponseLog."Invoice Number", Field);
 
-                10:
+                9:
                     Evaluate(ResponseLog."Batch Number", Field);
 
-                11:
+                10:
                     Evaluate(ResponseLog."Terminal Id", Field);
 
-                12:
+                11:
                     Evaluate(ResponseLog."Loyalty Points Awarded", Field);
 
-                13:
+                12:
                     Evaluate(ResponseLog.Remarks, Field);
 
-                14:
+                13:
                     Evaluate(ResponseLog."Transaction Acquirer Name", Field);
 
-                15:
+                14:
                     Evaluate(ResponseLog."Merchant ID", Field);
 
-                16:
+                15:
                     Evaluate(ResponseLog."Retrieval Reference Number", Field);
 
-                17:
+                16:
                     Evaluate(ResponseLog."Card Entry Mode", Field);
 
-                18:
+                17:
                     Evaluate(ResponseLog."Print CardHolder's Name On Rpt", Field);
 
-                19:
+                18:
                     Evaluate(ResponseLog."Merchant Name", Field);
 
-                20:
+                19:
                     Evaluate(ResponseLog."Merchant Address", Field);
 
-                21:
+                20:
                     Evaluate(ResponseLog."Merchant City", Field);
 
-                22:
+                21:
                     Evaluate(ResponseLog."Plutus Version", Field);
             end;
             // Message('Field %1: %2', i + 1, Field);

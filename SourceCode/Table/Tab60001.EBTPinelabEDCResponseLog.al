@@ -111,7 +111,7 @@ table 60001 "EBT Pinelab EDC Response Log"
     var
         ResponseLog: Record "EBT Pinelab EDC Response Log";
     begin
-        ResponseLog.SetRange("Billing Reference No.", "Billing Reference No.");
+        // ResponseLog.SetRange("Billing Reference No.", "Billing Reference No.");
         if ResponseLog.FindLast() then
             "Entry No." := ResponseLog."Entry No." + 1
         else

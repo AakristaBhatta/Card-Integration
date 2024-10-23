@@ -4,7 +4,7 @@ page 60001 "EBT Pinelab EDC Response Log"
     Caption = 'Pinelab EDC Response Log';
     PageType = List;
     SourceTable = "EBT Pinelab EDC Response Log";
-    SourceTableView = sorting("Billing Reference No.", "Entry No.") order(descending);
+    SourceTableView = sorting("Entry No.") order(descending);
     UsageCategory = Lists;
     Editable = true;
     DeleteAllowed = true;

@@ -33,6 +33,7 @@ codeunit 60001 "EBT Plutus EDC Event Helpers"
                         CurrInput := Format(TenderAmountText);
                         POSTranCU.TenderKeyPressedEx(TenderType.Code, CurrInput);
                     end else begin
+                        ErrorMessage := EDCResponseLog."Approval Code";
                         Error(TrasactionFailedLbl, ErrorMessage);
                     end;
                 end
