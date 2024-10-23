@@ -449,6 +449,7 @@ codeunit 60002 "EBT Plutus EDC Integration"
         EDCResponseLog."Response Log".CreateOutStream(OutStream);
         OutStream.WriteText(ResponseTxt);
         EDCResponseLog.Modify();
+        Commit();
         ProgressWindow.Close();
         exit(true)
     end;
