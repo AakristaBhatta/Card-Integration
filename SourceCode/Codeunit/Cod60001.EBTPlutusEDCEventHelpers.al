@@ -23,18 +23,24 @@ codeunit 60001 "EBT Plutus EDC Event Helpers"
         TrasactionFailedLbl: Label 'Transaction failed with following error.\%1';
         ProgressWindowLbl: Label 'Timeout in #1#### seconds.';
         ProgressWindow: Dialog;
+        ResponseLog: Record "EBT Pinelab EDC Response Log";
     begin
         if TenderType.Get(POSTransaction."Store No.", TenderTypeCode) then begin
             if TenderType."EBT Pinelab EDC Tender" then begin
                 TenderType.testfield("EBT Pinelab Request Mode");
                 POSTransaction.CalcFields("Gross Amount");
+                ResponseLog.Reset();
+                ResponseLog.SetRange("Billing Reference No.", POSTransaction."Receipt No.");
+                ResponseLog.SetRange("Approval Code", 'APPROVED');
+                if ResponseLog.FindFirst() then
+                    Error('Billing reference No. %1 is approved', ResponseLog."Billing Reference No.");
                 if EDCIntegration.UploadEDCTransaction(POSTransaction, EDCResponseLog, TenderAmountText, TenderType) = true then begin
                     if EDCResponseLog."Approval Code" = 'APPROVED' then begin
                         CurrInput := Format(TenderAmountText);
                         POSTranCU.TenderKeyPressedEx(TenderType.Code, CurrInput);
                     end else begin
-                        ErrorMessage := EDCResponseLog."Approval Code";
-                        Error(TrasactionFailedLbl, ErrorMessage);
+                        ErrorMessage := EDCResponseLog.Remarks;
+                        Error(ErrorMessage);
                     end;
                 end
                 else

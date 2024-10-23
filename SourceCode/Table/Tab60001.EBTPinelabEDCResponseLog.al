@@ -9,35 +9,35 @@ table 60001 "EBT Pinelab EDC Response Log"
         {
             Caption = 'Entry No.';
         }
-        field(2; "Billing Reference No."; Code[20])
+        field(2; "Billing Reference No."; Code[250])
         {
             Caption = 'Billing Reference No.';
         }
-        field(3; "Approval Code"; Code[20])
+        field(3; "Approval Code"; Code[250])
         {
             Caption = 'Approval Code';
         }
-        field(4; "Host Response"; Text[50])
+        field(4; "Host Response"; Text[250])
         {
             Caption = 'Host Response';
         }
-        field(5; "Card Number"; Text[20])
+        field(5; "Card Number"; Text[250])
         {
             Caption = 'Card Number';
         }
-        field(6; "Expiration Date"; Date)
+        field(6; "Expiration Date"; text[250])
         {
             Caption = 'Expiration Date';
         }
-        field(7; "CardHolder's Name"; Text[25])
+        field(7; "CardHolder's Name"; Text[250])
         {
             Caption = 'CardHolder''s Name';
         }
-        field(8; "Card Type"; Text[15])
+        field(8; "Card Type"; Text[250])
         {
             Caption = 'Card Type';
         }
-        field(9; "Invoice Number"; Code[200])
+        field(9; "Invoice Number"; Code[250])
         {
             Caption = 'Invoice Number';
         }
@@ -45,7 +45,7 @@ table 60001 "EBT Pinelab EDC Response Log"
         {
             Caption = 'Batch Number';
         }
-        field(11; "Terminal Id"; Text[10])
+        field(11; "Terminal Id"; Text[250])
         {
             Caption = 'Terminal Id';
         }
@@ -57,7 +57,7 @@ table 60001 "EBT Pinelab EDC Response Log"
         {
             Caption = 'Remarks';
         }
-        field(23; "Transaction Acquirer Name"; Text[50])
+        field(23; "Transaction Acquirer Name"; Text[250])
         {
             Caption = 'Transaction Acquirer Name';
         }
@@ -65,11 +65,11 @@ table 60001 "EBT Pinelab EDC Response Log"
         {
             Caption = 'Response Log';
         }
-        field(15; "Merchant ID"; Text[15])
+        field(15; "Merchant ID"; Text[250])
         {
             Caption = 'Merchant ID';
         }
-        field(16; "Retrieval Reference Number"; Text[15])
+        field(16; "Retrieval Reference Number"; Text[250])
         {
             Caption = 'Retrieval Reference Number';
         }
@@ -77,15 +77,15 @@ table 60001 "EBT Pinelab EDC Response Log"
         {
             Caption = 'Print CardHolder''s Name On Receipt';
         }
-        field(18; "Merchant Name"; Text[50])
+        field(18; "Merchant Name"; Text[250])
         {
             Caption = 'Merchant Name';
         }
-        field(19; "Merchant Address"; Text[50])
+        field(19; "Merchant Address"; Text[250])
         {
             Caption = 'Merchant Address';
         }
-        field(20; "Merchant City"; Text[50])
+        field(20; "Merchant City"; Text[250])
         {
             Caption = 'Merchant City';
         }
@@ -93,7 +93,7 @@ table 60001 "EBT Pinelab EDC Response Log"
         {
             Caption = 'Card Entry Mode';
         }
-        field(22; "Plutus Version"; Text[50])
+        field(22; "Plutus Version"; Text[250])
         {
             Caption = 'Plutus Version';
         }
@@ -101,7 +101,7 @@ table 60001 "EBT Pinelab EDC Response Log"
     }
     keys
     {
-        key(PK; "Entry No.")
+        key(PK; "Billing Reference No.", "Approval Code", "Entry No.")
         {
             Clustered = true;
         }
@@ -111,7 +111,9 @@ table 60001 "EBT Pinelab EDC Response Log"
     var
         ResponseLog: Record "EBT Pinelab EDC Response Log";
     begin
-        // ResponseLog.SetRange("Billing Reference No.", "Billing Reference No.");
+
+        ResponseLog.SetRange("Billing Reference No.", "Billing Reference No.");
+        ResponseLog.SetRange("Approval Code", "Approval Code");
         if ResponseLog.FindLast() then
             "Entry No." := ResponseLog."Entry No." + 1
         else

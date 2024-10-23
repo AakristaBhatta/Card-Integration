@@ -178,7 +178,7 @@ page 60001 "EBT Pinelab EDC Response Log"
             Field := DelChr(Field, '=', '/');
             Field := DelChr(Field, '=', '\');
             Field := DelChr(Field, '=', '"');
-            Message('Field %1: %2', i + 1, Field);
+            Message('Field %1: %2', i, Field);
         end;
         // for i := 0 to CsvFields.Count() - 1 do begin
         //     // Trim any leading or trailing whitespace

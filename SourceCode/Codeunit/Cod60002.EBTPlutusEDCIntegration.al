@@ -341,15 +341,15 @@ codeunit 60002 "EBT Plutus EDC Integration"
                 1:
                     ResponseLog."Billing Reference No." := Field;
                 2:
-                    Evaluate(ResponseLog."Approval Code", Field);
-                3:
                     Evaluate(ResponseLog."Host Response", Field);
+                3:
+                    Evaluate(ResponseLog."Approval Code", Field);
 
                 4:
                     Evaluate(ResponseLog."Card Number", Field);
                 5:
-                    if field <> 'XXXX' then
-                        Evaluate(ResponseLog."Expiration Date", Field);
+                    // if field <> 'XXXX' then
+                    Evaluate(ResponseLog."Expiration Date", Field);
                 6:
                     Evaluate(ResponseLog."CardHolder's Name", Field);
 
@@ -404,7 +404,7 @@ codeunit 60002 "EBT Plutus EDC Integration"
         ResponseLog."Response Log".CreateOutStream(OutStream, TEXTENCODING::UTF8);
         OutStream.WriteText(ResponseTxt);
         ResponseLog.Insert(true);
-        Commit();
+        // Commit();
     end;
 
     internal procedure RefundEDCTransaction(var POSTransaction: Record "LSC POS Transaction"; EDCResponseLog: Record "EBT Pinelab EDC Response Log"; TenderAmountText: Text): Boolean
