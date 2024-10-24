@@ -101,7 +101,7 @@ table 60001 "EBT Pinelab EDC Response Log"
     }
     keys
     {
-        key(PK; "Billing Reference No.", "Approval Code", "Entry No.")
+        key(PK; "Entry No.")
         {
             Clustered = true;
         }
@@ -111,8 +111,8 @@ table 60001 "EBT Pinelab EDC Response Log"
     var
         ResponseLog: Record "EBT Pinelab EDC Response Log";
     begin
-        ResponseLog.SetRange("Billing Reference No.", "Billing Reference No.");
-        ResponseLog.SetRange("Approval Code", "Approval Code");
+        // ResponseLog.SetRange("Billing Reference No.", "Billing Reference No.");
+        // ResponseLog.SetRange("Approval Code", "Approval Code");
         if ResponseLog.FindLast() then
             "Entry No." := ResponseLog."Entry No." + 1
         else
