@@ -23,18 +23,18 @@ codeunit 60003 "EBT PineLabs EDC Commands"
             case Rec.Command of
                 PinelabCardLbl:
                     begin
-                        ProcessInnovitiCard(Rec);
                         CardType := CardType::"Card Wired";
+                        ProcessInnovitiCard(Rec);
                     end;
                 PineLabUPILbl:
                     begin
-                        ProcessInnovitiUPI(Rec);
                         CardType := CardType::"UPI Wired";
+                        ProcessInnovitiUPI(Rec);
                     end;
                 PineLabLastTransaction:
                     begin
-                        ProcessLastTransactionUPI(Rec);
                         CardType := CardType::"UPI Last Transaction";
+                        ProcessLastTransactionUPI(Rec);
                     end;
             end;
             Rec := GlobalRec;
