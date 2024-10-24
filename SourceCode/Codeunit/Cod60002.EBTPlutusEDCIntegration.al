@@ -285,7 +285,7 @@ codeunit 60002 "EBT Plutus EDC Integration"
         ResponseDesc := ResultToken.AsValue().AsText();
     end;
 
-    local procedure PrepareValue(var POSTransaction: Record "LSC POS Transaction"; var TenderAmountText: Text; TenderType: Record "LSC Tender Type") ValueTxt: Text
+    local procedure PrepareValue(var POSTransaction: Record "LSC POS Transaction"; var TenderAmountText: Text; TenderType: Record "LSC Tender Type"; CardType: Enum "EBT Card Type") ValueTxt: Text
     var
         TxnType, TxnMode, TxnID, TxnAmount, TxnDateTime, MID, StoreCode : Text;
         SeparatorLbl: Text;
@@ -298,7 +298,10 @@ codeunit 60002 "EBT Plutus EDC Integration"
             TxnType := '01'
         else
             TxnType := '00';
+
         TxnMode := TenderType."EBT Pinelab Request Mode";
+        if CardType = CardType::"UPI Last Transaction" then
+            TxnMode := TenderType."EBT Last Txn Request Mode";
         TxnID := POSTransaction."Receipt No.";
         TxnAmount := DelChr(format(TenderAmount), '=', ',');
         TxnDateTime := format(CurrentDateTime, 0, '<Year4>-<Month,2>-<Day,2>T<Hours12,2>:<Minutes,2>:<Seconds,2>');
@@ -412,7 +415,7 @@ codeunit 60002 "EBT Plutus EDC Integration"
         exit(true); // Since we do not have refund api, we are doing exit true for this case
     end;
 
-    internal procedure UploadEDCTransaction(var POSTransaction: Record "LSC POS Transaction"; var EDCResponseLog: Record "EBT Pinelab EDC Response Log"; TenderAmountText: Text; TenderType: Record "LSC Tender Type"): Boolean
+    internal procedure UploadEDCTransaction(var POSTransaction: Record "LSC POS Transaction"; var EDCResponseLog: Record "EBT Pinelab EDC Response Log"; TenderAmountText: Text; TenderType: Record "LSC Tender Type"; CardType: Enum "EBT Card Type"): Boolean
     var
         POSTerminal: Record "LSC POS Terminal";
         ValueTxt, SKUItemDetailsTxt, ResponseTxt : Text;
@@ -439,7 +442,7 @@ codeunit 60002 "EBT Plutus EDC Integration"
         POSTerminal.TestField("EBT Pinelab EDC Device IP");
         POSTerminal.TestField("EBT Pinelab EDC Device Port");
         BaseUrl := StrSubstNo(EDCSetup."Base URL", POSTerminal."EBT Pinelab EDC Device IP", POSTerminal."EBT Pinelab EDC Device Port");
-        ValueTxt := PrepareValue(POSTransaction, TenderAmountText, TenderType);
+        ValueTxt := PrepareValue(POSTransaction, TenderAmountText, TenderType, CardType);
         BodyObject.Add('request_csv', ValueTxt);
         BodyObject.WriteTo(bodyText);
         ResponseTxt := ExecuteWebRequest(BaseUrl, 'POST', bodyText, HeaderValues);

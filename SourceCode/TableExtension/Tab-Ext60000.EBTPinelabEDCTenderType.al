@@ -17,5 +17,9 @@ tableextension 60000 "EBT Pinelab EDC Tender Type" extends "LSC Tender Type"
             Caption = 'PinelabWaiting Message';
             DataClassification = CustomerContent;
         }
+        field(60003; "EBT Last Txn Request Mode"; Text[5])
+        {
+            Caption = 'Pinelab last Transaction Mode';
+        }
     }
 }

@@ -10,6 +10,7 @@ codeunit 60003 "EBT PineLabs EDC Commands"
         PineLabLastTransaction: Label 'EBT_Pinn_LastTransaction';
         ModuleLbl: Label 'EBT_Pinelab';
         ModuleNameLbl: Label 'EBT PineLab EDC';
+        CardType: Enum "EBT Card Type";
 
 
     trigger OnRun()
@@ -23,14 +24,17 @@ codeunit 60003 "EBT PineLabs EDC Commands"
                 PinelabCardLbl:
                     begin
                         ProcessInnovitiCard(Rec);
+                        CardType := CardType::"Card Wired";
                     end;
                 PineLabUPILbl:
                     begin
                         ProcessInnovitiUPI(Rec);
+                        CardType := CardType::"UPI Wired";
                     end;
                 PineLabLastTransaction:
                     begin
                         ProcessLastTransactionUPI(Rec);
+                        CardType := CardType::"UPI Last Transaction";
                     end;
             end;
             Rec := GlobalRec;
@@ -84,8 +88,9 @@ codeunit 60003 "EBT PineLabs EDC Commands"
         TenderType.SetRange("EBT Pinelab EDC Tender", true);
         if not TenderType.FindFirst() then
             Error(EDCTendorNotFoundErr);
-        EDCHelpers.ProcessInnovitiPayment(POSTrans, CurrInput, TenderType.Code, TenderAmountText);
+        EDCHelpers.ProcessInnovitiPayment(POSTrans, CurrInput, TenderType.Code, TenderAmountText, CardType);
     end;
+
 
 
     procedure Register(var MenuLine: Record "LSC POS Menu Line")

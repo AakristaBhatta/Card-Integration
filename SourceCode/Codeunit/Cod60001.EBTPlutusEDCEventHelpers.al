@@ -10,7 +10,7 @@ codeunit 60001 "EBT Plutus EDC Event Helpers"
 
     end;
 
-    procedure ProcessInnovitiPayment(var POSTransaction: Record "LSC POS Transaction"; var CurrInput: Text; var TenderTypeCode: Code[10]; var TenderAmountText: Text)
+    procedure ProcessInnovitiPayment(var POSTransaction: Record "LSC POS Transaction"; var CurrInput: Text; var TenderTypeCode: Code[10]; var TenderAmountText: Text; CardType: Enum "EBT Card Type")
     var
         TenderType: Record "LSC Tender Type";
         EDCIntegration: Codeunit "EBT Plutus EDC Integration";
@@ -34,7 +34,7 @@ codeunit 60001 "EBT Plutus EDC Event Helpers"
                 ResponseLog.SetRange("Approval Code", 'APPROVED');
                 if ResponseLog.FindFirst() then
                     Error('Billing reference No. %1 is approved', ResponseLog."Billing Reference No.");
-                if EDCIntegration.UploadEDCTransaction(POSTransaction, EDCResponseLog, TenderAmountText, TenderType) = true then begin
+                if EDCIntegration.UploadEDCTransaction(POSTransaction, EDCResponseLog, TenderAmountText, TenderType, CardType) = true then begin
                     if EDCResponseLog."Approval Code" = 'APPROVED' then begin
                         CurrInput := Format(TenderAmountText);
                         POSTranCU.TenderKeyPressedEx(TenderType.Code, CurrInput);

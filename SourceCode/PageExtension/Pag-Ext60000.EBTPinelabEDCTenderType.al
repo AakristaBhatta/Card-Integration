@@ -17,6 +17,11 @@ pageextension 60000 "EBT Pinelab EDC Tender Type" extends "LSC Tender Type Card"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Innoviti Request Mode field.';
                 }
+                field("EBT Last Txn Request Mode"; Rec."EBT Last Txn Request Mode")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Pinelab last Transaction Mode field.', Comment = '%';
+                }
                 field("EBT PinelabWaiting Message"; Rec."EBT PinelabWaiting Message")
                 {
                     ApplicationArea = All;
