@@ -49,7 +49,7 @@ page 60000 "EBT Pinelab EDC Setup"
                 action(RegisterCommands)
                 {
                     ApplicationArea = All;
-                    Caption = 'Register Innoviti EDC Commands';
+                    Caption = 'Register Pinelab EDC Commands';
                     PromotedCategory = Process;
                     Promoted = true;
                     Image = Accounts;

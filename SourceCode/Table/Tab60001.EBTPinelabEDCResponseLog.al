@@ -111,7 +111,6 @@ table 60001 "EBT Pinelab EDC Response Log"
     var
         ResponseLog: Record "EBT Pinelab EDC Response Log";
     begin
-
         ResponseLog.SetRange("Billing Reference No.", "Billing Reference No.");
         ResponseLog.SetRange("Approval Code", "Approval Code");
         if ResponseLog.FindLast() then

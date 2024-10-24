@@ -447,7 +447,7 @@ codeunit 60002 "EBT Plutus EDC Integration"
         ResponseTxtFormatted := GetJsonToken(PayLoadObject, 'response_csv').AsValue().AsText();
         FillResponseLog(POSTransaction, EDCResponseLog, TenderAmountText, ResponseTxtFormatted);
         EDCResponseLog."Response Log".CreateOutStream(OutStream);
-        OutStream.WriteText(ResponseTxt);
+        OutStream.WriteText(ResponseTxtFormatted);
         EDCResponseLog.Modify();
         Commit();
         ProgressWindow.Close();

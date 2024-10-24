@@ -7,7 +7,7 @@ codeunit 60003 "EBT PineLabs EDC Commands"
         CommandFunc: Codeunit "LSC POS Command Registration";
         PinelabCardLbl: Label 'EBT_Pinn_Card_Wired';
         PineLabUPILbl: Label 'EBT_Pinn _UPI_Wired';
-        PineLabLastTransaction: Label 'EBT_Pinn_LastTransaction';
+        PineLabLastTransaction: Label 'EBT_Pin_LastTxn';
         ModuleLbl: Label 'EBT_Pinelab';
         ModuleNameLbl: Label 'EBT PineLab EDC';
 
