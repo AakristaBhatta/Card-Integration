@@ -5,10 +5,12 @@ codeunit 60003 "EBT PineLabs EDC Commands"
     var
         GlobalRec: Record "LSC POS Menu Line";
         CommandFunc: Codeunit "LSC POS Command Registration";
-        InnovitiCardLbl: Label 'EBT_Pinn_Card_Wired';
-        InnovitiUPILbl: Label 'EBT_Pinn _UPI_Wired';
+        PinelabCardLbl: Label 'EBT_Pinn_Card_Wired';
+        PineLabUPILbl: Label 'EBT_Pinn _UPI_Wired';
+        PineLabLastTransaction: Label 'EBT_Pinn_LastTransaction';
         ModuleLbl: Label 'EBT_Pinelab';
         ModuleNameLbl: Label 'EBT PineLab EDC';
+
 
     trigger OnRun()
     begin
@@ -18,13 +20,17 @@ codeunit 60003 "EBT PineLabs EDC Commands"
             Register(Rec)
         else begin
             case Rec.Command of
-                InnovitiCardLbl:
+                PinelabCardLbl:
                     begin
                         ProcessInnovitiCard(Rec);
                     end;
-                InnovitiUPILbl:
+                PineLabUPILbl:
                     begin
                         ProcessInnovitiUPI(Rec);
+                    end;
+                PineLabLastTransaction:
+                    begin
+                        ProcessLastTransactionUPI(Rec);
                     end;
             end;
             Rec := GlobalRec;
@@ -44,6 +50,11 @@ codeunit 60003 "EBT PineLabs EDC Commands"
     local procedure ProcessInnovitiUPI(Rec: Record "LSC POS Menu Line")
     begin
         ProcessInnovitiPayment(Rec);
+    end;
+
+    local procedure ProcessLastTransactionUPI(rec: Record "LSC POS Menu Line")
+    begin
+        ProcessInnovitiPayment(rec);
     end;
 
     local procedure ProcessInnovitiPayment(Rec: Record "LSC POS Menu Line")
@@ -83,8 +94,9 @@ codeunit 60003 "EBT PineLabs EDC Commands"
         AutoRegLbl: Label 'PineLab EDC Command has been registerd. Now bind these commands with the buttons along with the parameters. Parameter defined must be equal to Tender Type Code.';
     begin
         CommandFunc.RegisterModule(ModuleLbl, ModuleNameLbl, 60003);
-        CommandFunc.RegisterExtCommand(InnovitiCardLbl, 'PineLab Card Payment', 60003, ParameterType::" ", ModuleLbl, true);
-        CommandFunc.RegisterExtCommand(InnovitiUPILbl, 'PineLab UPI Payment', 60003, ParameterType::" ", ModuleLbl, true);
+        CommandFunc.RegisterExtCommand(PinelabCardLbl, 'PineLab Card Payment', 60003, ParameterType::" ", ModuleLbl, true);
+        CommandFunc.RegisterExtCommand(PineLabUPILbl, 'PineLab UPI Payment', 60003, ParameterType::" ", ModuleLbl, true);
+        CommandFunc.RegisterExtCommand(PineLabLastTransaction, 'Pinelab Last Transaction UPI Payment', 60003, ParameterType::" ", ModuleLbl, true);
         Message(AutoRegLbl);
     end;
 
