@@ -463,6 +463,7 @@ codeunit 60002 "EBT Plutus EDC Integration"
         OutStream: OutStream;
         ProgressWindow: Dialog;
         ProgressLbl: Label 'Kindly make card payment of %1 Rs.';
+        ProgressLblLastTxn: Label 'Checking last transaction status for receipt';
         ProgressTxt: Text;
         HeaderValues: Dictionary of [Text, Text];
         BodyObject: JsonObject;
@@ -476,6 +477,8 @@ codeunit 60002 "EBT Plutus EDC Integration"
             ProgressTxt := StrSubstNo(ProgressLbl, TenderAmountText)
         else
             ProgressTxt := StrSubstNo(TenderType."EBT PinelabWaiting Message", TenderAmountText);
+        if CardType = CardType::"UPI Last Transaction" then
+            ProgressTxt := ProgressLblLastTxn;
         ProgressWindow.Open(ProgressTxt);
         GetSetup();
         POSTerminal.Get(POSTransaction."POS Terminal No.");
