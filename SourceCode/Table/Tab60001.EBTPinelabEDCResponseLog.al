@@ -193,8 +193,8 @@ table 60001 "EBT Pinelab EDC Response Log"
         TypeHelper: Codeunit "Type Helper";
         InStream: InStream;
     begin
-        // CalcFields("Response Log");
-        // "Response Log".CreateInStream(InStream, TEXTENCODING::UTF8);
-        // exit(TypeHelper.TryReadAsTextWithSepAndFieldErrMsg(InStream, TypeHelper.LFSeparator(), FieldName("Receipt XML Data")));
+        CalcFields("Response Log");
+        "Response Log".CreateInStream(InStream, TEXTENCODING::UTF8);
+        exit(TypeHelper.TryReadAsTextWithSepAndFieldErrMsg(InStream, TypeHelper.LFSeparator(), FieldName("Response Log")));
     end;
 }
