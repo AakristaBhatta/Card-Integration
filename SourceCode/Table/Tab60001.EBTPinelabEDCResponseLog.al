@@ -97,6 +97,75 @@ table 60001 "EBT Pinelab EDC Response Log"
         {
             Caption = 'Plutus Version';
         }
+        field(24; "UPI/Bharat QR"; Integer)
+        {
+            Caption = 'UPI/Bharat Qr';
+        }
+        field(25; "Reward Redeened Amount"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(26; "Reward Redeemed Point"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+        }
+
+        field(27; "Reward Balance Amount"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(28; "Reward Balance Points"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(29; "Charge Slip Print Data"; Text[100])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(30; "RFU1"; Text[100])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(31; "Amount Success Message"; Text[250])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(32; "RFU3"; Text[250])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(33; "RFU4"; Text[250])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(34; "Date Of Transaction"; Text[250])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(35; "Time Of Transaction"; Text[250])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(36; "Plutus Transaction Id"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(37; RFU5; Text[100])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(38; RFU6; Text[100])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(39; "RFU7"; Text[100])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(40; "OrigBillDetails"; text[250])
+        {
+            DataClassification = ToBeClassified;
+        }
 
     }
     keys

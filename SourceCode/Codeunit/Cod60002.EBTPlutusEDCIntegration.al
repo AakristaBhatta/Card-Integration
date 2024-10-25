@@ -340,66 +340,106 @@ codeunit 60002 "EBT Plutus EDC Integration"
             Field := DelChr(Field, '=', '/');
             Field := DelChr(Field, '=', '\');
             Field := DelChr(Field, '=', '"');
-            case i of
-                1:
-                    ResponseLog."Billing Reference No." := Field;
-                2:
-                    Evaluate(ResponseLog."Host Response", Field);
-                3:
-                    Evaluate(ResponseLog."Approval Code", Field);
+            if Field <> '' then begin
+                case i of
+                    1:
+                        ResponseLog."Billing Reference No." := Field;
+                    2:
+                        Evaluate(ResponseLog."Host Response", Field);
+                    3:
+                        Evaluate(ResponseLog."Approval Code", Field);
 
-                4:
-                    Evaluate(ResponseLog."Card Number", Field);
-                5:
-                    // if field <> 'XXXX' then
-                    Evaluate(ResponseLog."Expiration Date", Field);
-                6:
-                    Evaluate(ResponseLog."CardHolder's Name", Field);
+                    4:
+                        Evaluate(ResponseLog."Card Number", Field);
+                    5:
+                        // if field <> 'XXXX' then
+                        Evaluate(ResponseLog."Expiration Date", Field);
+                    6:
+                        Evaluate(ResponseLog."CardHolder's Name", Field);
 
-                7:
-                    Evaluate(ResponseLog."Card Type", Field);
+                    7:
+                        Evaluate(ResponseLog."Card Type", Field);
 
-                8:
-                    Evaluate(ResponseLog."Invoice Number", Field);
+                    8:
+                        Evaluate(ResponseLog."Invoice Number", Field);
 
-                9:
-                    Evaluate(ResponseLog."Batch Number", Field);
+                    9:
+                        if Field <> '' then
+                            Evaluate(ResponseLog."Batch Number", Field);
 
-                10:
-                    Evaluate(ResponseLog."Terminal Id", Field);
+                    10:
+                        Evaluate(ResponseLog."Terminal Id", Field);
 
-                11:
-                    Evaluate(ResponseLog."Loyalty Points Awarded", Field);
+                    11:
+                        if Field <> '' then
+                            Evaluate(ResponseLog."Loyalty Points Awarded", Field);
 
-                12:
-                    Evaluate(ResponseLog.Remarks, Field);
+                    12:
+                        Evaluate(ResponseLog.Remarks, Field);
 
-                13:
-                    Evaluate(ResponseLog."Transaction Acquirer Name", Field);
+                    13:
+                        Evaluate(ResponseLog."Transaction Acquirer Name", Field);
 
-                14:
-                    Evaluate(ResponseLog."Merchant ID", Field);
+                    14:
+                        Evaluate(ResponseLog."Merchant ID", Field);
 
-                15:
-                    Evaluate(ResponseLog."Retrieval Reference Number", Field);
+                    15:
+                        Evaluate(ResponseLog."Retrieval Reference Number", Field);
 
-                16:
-                    Evaluate(ResponseLog."Card Entry Mode", Field);
+                    16:
+                        Evaluate(ResponseLog."Card Entry Mode", Field);
 
-                17:
-                    Evaluate(ResponseLog."Print CardHolder's Name On Rpt", Field);
+                    17:
+                        if Field <> '' then
+                            Evaluate(ResponseLog."Print CardHolder's Name On Rpt", Field);
 
-                18:
-                    Evaluate(ResponseLog."Merchant Name", Field);
+                    18:
+                        Evaluate(ResponseLog."Merchant Name", Field);
 
-                19:
-                    Evaluate(ResponseLog."Merchant Address", Field);
+                    19:
+                        Evaluate(ResponseLog."Merchant Address", Field);
 
-                20:
-                    Evaluate(ResponseLog."Merchant City", Field);
+                    20:
+                        Evaluate(ResponseLog."Merchant City", Field);
 
-                21:
-                    Evaluate(ResponseLog."Plutus Version", Field);
+                    21:
+                        Evaluate(ResponseLog."Plutus Version", Field);
+                    22:
+                        Evaluate(ResponseLog."UPI/Bharat QR", Field);
+                    23:
+                        Evaluate(ResponseLog."Reward Redeened Amount", Field);
+                    24:
+                        Evaluate(ResponseLog."Reward Redeemed Point", Field);
+                    25:
+                        Evaluate(ResponseLog."Reward Balance Amount", Field);
+                    26:
+                        Evaluate(ResponseLog."Reward Balance Points", Field);
+                    27:
+                        Evaluate(ResponseLog."Charge Slip Print Data", Field);
+                    28:
+                        Evaluate(ResponseLog.RFU1, Field);
+                    29:
+                        Evaluate(ResponseLog."Amount Success Message", Field);
+                    30:
+                        Evaluate(ResponseLog.RFU3, Field);
+                    31:
+                        Evaluate(ResponseLog.RFU4, Field);
+                    32:
+                        Evaluate(ResponseLog."Date Of Transaction", Field);
+                    33:
+                        Evaluate(ResponseLog."Time Of Transaction", Field);
+                    34:
+                        Evaluate(ResponseLog."Plutus Transaction Id", Field);
+                    35:
+                        Evaluate(ResponseLog.RFU5, Field);
+                    36:
+                        Evaluate(ResponseLog.RFU6, Field);
+                    37:
+                        Evaluate(ResponseLog.RFU7, Field);
+                    38:
+                        Evaluate(ResponseLog.OrigBillDetails, Field)
+
+                end;
             end;
             // Message('Field %1: %2', i + 1, Field);
             // ResponseLog."Billing Reference No." := POSTransaction."Receipt No.";
